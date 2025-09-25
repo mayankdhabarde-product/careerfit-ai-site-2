@@ -64,14 +64,14 @@ const ComparisonTable = () => {
                 {comparisons.map((item, index) => (
                   <tr
                     key={item.category}
-                    className={`border-b border-border hover:bg-muted/50 transition-colors ${
+                    className={`comparison-row border-b border-border ${
                       index % 2 === 0 ? "bg-white" : "bg-muted/20"
                     }`}
                   >
-                    <td className="px-6 py-6 font-semibold text-primary">
+                    <td className="comparison-cell px-6 py-6 font-semibold text-primary">
                       {item.category}
                     </td>
-                    <td className="px-6 py-6 text-center">
+                    <td className="comparison-cell px-6 py-6 text-center">
                       <div className="flex items-center justify-center space-x-2">
                         <X className="w-5 h-5 text-red-500" />
                         <span className="text-muted-foreground">
@@ -79,7 +79,7 @@ const ComparisonTable = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-6 text-center bg-secondary/5">
+                    <td className="comparison-cell px-6 py-6 text-center bg-secondary/5">
                       <div className="flex items-center justify-center space-x-2">
                         <Check className="w-5 h-5 text-green-500" />
                         <span className="font-semibold text-secondary">

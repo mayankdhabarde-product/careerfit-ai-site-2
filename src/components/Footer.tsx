@@ -16,20 +16,6 @@ const Footer = () => {
     { name: "Cookie Policy", path: "/cookies" },
   ];
 
-  const offices = [
-    {
-      city: "New York",
-      address: "123 Business Ave, Suite 100, NY 10001",
-    },
-    {
-      city: "San Francisco",
-      address: "456 Tech Street, Suite 200, CA 94102",
-    },
-    {
-      city: "London",
-      address: "789 Corporate Lane, Suite 300, EC1A 1BB",
-    },
-  ];
 
   return (
     <footer className="bg-primary text-white">
@@ -55,19 +41,19 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-secondary" />
                 <a 
-                  href="tel:+1-800-CAREER-FIT" 
+                  href="tel:+918885005749" 
                   className="text-white/80 hover:text-white transition-colors"
                 >
-                  +1 (800) CAREER-FIT
+                  +91 8885005749
                 </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-secondary" />
                 <a 
-                  href="mailto:hello@careerfit.ai" 
+                  href="mailto:team@careerfit.ai" 
                   className="text-white/80 hover:text-white transition-colors"
                 >
-                  hello@careerfit.ai
+                  team@careerfit.ai
                 </a>
               </div>
             </div>
@@ -90,19 +76,20 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Office Locations */}
+          {/* Office Location */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Our Offices</h3>
+            <h3 className="text-lg font-semibold mb-6">Office</h3>
             <div className="space-y-4">
-              {offices.map((office) => (
-                <div key={office.city} className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-secondary flex-shrink-0" />
-                    <span className="font-medium">{office.city}</span>
-                  </div>
-                  <p className="text-white/80 text-sm ml-6">{office.address}</p>
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-secondary flex-shrink-0" />
+                  <span className="font-medium">Mumbai</span>
                 </div>
-              ))}
+                <p className="text-white/80 text-sm ml-6">
+                  3rd Floor, Chintamani Plaza, Andheri - Kurla Rd.<br />
+                  Rd, Marol Naka, Andheri East, Mumbai, Maharashtra 400059
+                </p>
+              </div>
             </div>
           </div>
 

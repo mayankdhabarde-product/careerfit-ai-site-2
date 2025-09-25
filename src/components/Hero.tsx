@@ -79,13 +79,18 @@ const Hero = () => {
 
           {/* Hero Image */}
           <div className="animate-slide-in-right">
-            <div className="relative">
+            <div className="hero-image-container">
               <img
                 src={heroImage}
                 alt="Professional recruitment team helping companies hire top talent"
-                className="w-full h-auto rounded-2xl shadow-strong"
+                className="w-full h-auto transition-all duration-500 ease-out shadow-strong"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent rounded-2xl"></div>
+              <div className="hero-image-overlay">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">Hired in 8 days</h3>
+                  <p className="text-white/90 font-medium">Real results from our clients</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

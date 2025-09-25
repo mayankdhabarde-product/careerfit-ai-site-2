@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const SuccessStories = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const stories = [
@@ -128,104 +129,204 @@ const SuccessStories = () => {
             </Button>
           </div>
 
-          {/* Stories Carousel */}
-          <div
-            ref={scrollRef}
-            className="flex space-x-6 overflow-x-auto scrollbar-hide pb-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          {/* Stories Carousel - Continuous Scroll */}
+          <div 
+            className="overflow-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            {stories.map((story, index) => (
-              <div
-                key={story.company}
-                className="flex-shrink-0 w-full max-w-4xl bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300"
-              >
-                <div className="grid md:grid-cols-2 gap-8">
-                  {/* Company Info */}
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center text-2xl">
-                        {story.logo}
+            <div
+              className={`flex space-x-6 ${!isHovered ? 'animate-continuous-scroll' : ''} hover:animation-paused`}
+              style={{ width: `${stories.length * 2 * 100}%` }}
+            >
+              {/* First set of stories */}
+              {stories.map((story, index) => (
+                <div
+                  key={`first-${story.company}`}
+                  className="flex-shrink-0 w-full max-w-4xl bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300 mr-6"
+                >
+                  <div className="grid md:grid-cols-2 gap-8">
+                    {/* Company Info */}
+                    <div className="space-y-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center text-2xl">
+                          {story.logo}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-primary">
+                            {story.company}
+                          </h3>
+                          <p className="text-muted-foreground">{story.industry}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-primary">
-                          {story.company}
-                        </h3>
-                        <p className="text-muted-foreground">{story.industry}</p>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Challenge</h4>
+                          <p className="text-muted-foreground">{story.challenge}</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Solution</h4>
+                          <p className="text-muted-foreground">{story.solution}</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Result</h4>
+                          <p className="text-muted-foreground">{story.result}</p>
+                        </div>
+                      </div>
+
+                      {/* Metrics */}
+                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.timeReduction}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Time Reduction
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.costSavings}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Cost Savings
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.satisfaction}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Satisfaction
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-primary mb-2">Challenge</h4>
-                        <p className="text-muted-foreground">{story.challenge}</p>
-                      </div>
+                    {/* Testimonial */}
+                    <div className="space-y-6">
+                      <blockquote className="text-lg leading-relaxed text-foreground">
+                        "{story.quote}"
+                      </blockquote>
                       
-                      <div>
-                        <h4 className="font-semibold text-primary mb-2">Solution</h4>
-                        <p className="text-muted-foreground">{story.solution}</p>
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
+                          <span className="text-white font-semibold">
+                            {story.author.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-primary">{story.author}</div>
+                          <div className="text-muted-foreground">{story.title}</div>
+                        </div>
                       </div>
-                      
-                      <div>
-                        <h4 className="font-semibold text-primary mb-2">Result</h4>
-                        <p className="text-muted-foreground">{story.result}</p>
-                      </div>
-                    </div>
 
-                    {/* Metrics */}
-                    <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-secondary">
-                          {story.metrics.timeReduction}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Time Reduction
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-secondary">
-                          {story.metrics.costSavings}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Cost Savings
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-secondary">
-                          {story.metrics.satisfaction}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Satisfaction
-                        </div>
-                      </div>
+                      <Link to="/success-stories" className="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors group">
+                        <span className="font-medium">Read Full Case Study</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
                     </div>
-                  </div>
-
-                  {/* Testimonial */}
-                  <div className="space-y-6">
-                    <blockquote className="text-lg leading-relaxed text-foreground">
-                      "{story.quote}"
-                    </blockquote>
-                    
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold">
-                          {story.author.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-primary">{story.author}</div>
-                        <div className="text-muted-foreground">{story.title}</div>
-                      </div>
-                    </div>
-
-                    <Link to="/success-stories" className="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors group">
-                      <span className="font-medium">Read Full Case Study</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+              
+              {/* Duplicate set for seamless loop */}
+              {stories.map((story, index) => (
+                <div
+                  key={`second-${story.company}`}
+                  className="flex-shrink-0 w-full max-w-4xl bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300 mr-6"
+                >
+                  <div className="grid md:grid-cols-2 gap-8">
+                    {/* Company Info */}
+                    <div className="space-y-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center text-2xl">
+                          {story.logo}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-primary">
+                            {story.company}
+                          </h3>
+                          <p className="text-muted-foreground">{story.industry}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Challenge</h4>
+                          <p className="text-muted-foreground">{story.challenge}</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Solution</h4>
+                          <p className="text-muted-foreground">{story.solution}</p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-primary mb-2">Result</h4>
+                          <p className="text-muted-foreground">{story.result}</p>
+                        </div>
+                      </div>
+
+                      {/* Metrics */}
+                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.timeReduction}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Time Reduction
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.costSavings}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Cost Savings
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-secondary">
+                            {story.metrics.satisfaction}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Satisfaction
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Testimonial */}
+                    <div className="space-y-6">
+                      <blockquote className="text-lg leading-relaxed text-foreground">
+                        "{story.quote}"
+                      </blockquote>
+                      
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
+                          <span className="text-white font-semibold">
+                            {story.author.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-primary">{story.author}</div>
+                          <div className="text-muted-foreground">{story.title}</div>
+                        </div>
+                      </div>
+
+                      <Link to="/success-stories" className="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors group">
+                        <span className="font-medium">Read Full Case Study</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

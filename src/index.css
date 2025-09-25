@@ -183,6 +183,10 @@
     animation: scaleIn 0.5s ease-out forwards;
   }
   
+  .animate-continuous-scroll {
+    animation: continuousScroll 30s linear infinite;
+  }
+  
   /* Intersection Observer animation delays */
   .animate-delay-100 { animation-delay: 0.1s; }
   .animate-delay-200 { animation-delay: 0.2s; }
@@ -192,6 +196,41 @@
   /* Smooth scroll behavior */
   .smooth-scroll {
     scroll-behavior: smooth;
+  }
+  
+  /* Hero image hover effect */
+  .hero-image-container {
+    @apply relative overflow-hidden rounded-2xl;
+  }
+  
+  .hero-image-overlay {
+    @apply absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0;
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .hero-image-container:hover .hero-image-overlay {
+    @apply opacity-100;
+  }
+  
+  .hero-image-container:hover img {
+    @apply scale-110 brightness-75;
+  }
+  
+  /* Comparison table hover effects */
+  .comparison-row {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .comparison-row:hover {
+    @apply bg-primary/5 scale-[1.02] shadow-medium transform-gpu;
+  }
+  
+  .comparison-cell {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .comparison-row:hover .comparison-cell {
+    @apply scale-105;
   }
 }
 
@@ -248,5 +287,14 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes continuousScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
