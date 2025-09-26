@@ -440,6 +440,11 @@ const SuccessStoriesDetail = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Separator line between stories */}
+                  {index < detailedStories.length - 1 && (
+                    <hr className="mt-16 border-t border-border/30" />
+                  )}
                 </article>
               ))}
             </div>

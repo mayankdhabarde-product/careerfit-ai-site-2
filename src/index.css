@@ -16,11 +16,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 195 100% 15%;
 
-    /* Primary: Deep blue (#004466) */
-    --primary: 195 100% 20%;
+    /* Primary: Vibrant blue (#0044cc) for headlines and CTAs */
+    --primary: 220 100% 40%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Teal (#008080) */
+    /* Secondary: Teal (#008080) for base gradient */
     --secondary: 180 100% 25%;
     --secondary-foreground: 0 0% 100%;
 
@@ -42,14 +42,14 @@
     --radius: 0.75rem;
     
     /* Brand gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(195, 100%, 20%), hsl(180, 100%, 25%));
-    --gradient-hero: linear-gradient(135deg, hsl(195, 100%, 20%) 0%, hsl(180, 100%, 25%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(180, 100%, 25%), hsl(220, 100%, 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(180, 100%, 25%) 0%, hsl(220, 100%, 40%) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(195, 25%, 98%) 100%);
     
     /* Professional shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(195, 100%, 20% / 0.1);
-    --shadow-medium: 0 8px 30px -8px hsl(195, 100%, 20% / 0.15);
-    --shadow-strong: 0 12px 40px -12px hsl(195, 100%, 20% / 0.25);
+    --shadow-soft: 0 4px 20px -4px hsl(220, 100%, 40% / 0.1);
+    --shadow-medium: 0 8px 30px -8px hsl(220, 100%, 40% / 0.15);
+    --shadow-strong: 0 12px 40px -12px hsl(220, 100%, 40% / 0.25);
     
     /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -183,8 +183,8 @@
     animation: scaleIn 0.5s ease-out forwards;
   }
   
-  .animate-continuous-scroll {
-    animation: continuousScroll 30s linear infinite;
+  .animate-slide-carousel {
+    animation: slideCarousel 2s ease-in-out infinite;
   }
   
   /* Intersection Observer animation delays */
@@ -290,7 +290,7 @@
   }
 }
 
-@keyframes continuousScroll {
+@keyframes slideCarousel {
   0% {
     transform: translateX(0);
   }

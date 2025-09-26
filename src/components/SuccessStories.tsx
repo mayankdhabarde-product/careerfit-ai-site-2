@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const SuccessStories = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const stories = [
     {
@@ -58,26 +58,32 @@ const SuccessStories = () => {
       }
     }
   ];
+  
+  // Auto-slide functionality
+  useEffect(() => {
+    if (isHovered || isAnimating) return;
+    
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
+      setTimeout(() => setIsAnimating(false), 800); // Match transition duration
+    }, 2000); // 2 second delay
+
+    return () => clearInterval(interval);
+  }, [isHovered, isAnimating, stories.length]);
 
   const scrollToIndex = (index: number) => {
-    if (scrollRef.current) {
-      const cardWidth = scrollRef.current.children[0]?.getBoundingClientRect().width || 0;
-      scrollRef.current.scrollTo({
-        left: index * (cardWidth + 24), // 24px gap
-        behavior: 'smooth'
-      });
-    }
     setCurrentIndex(index);
   };
 
   const nextStory = () => {
     const nextIndex = (currentIndex + 1) % stories.length;
-    scrollToIndex(nextIndex);
+    setCurrentIndex(nextIndex);
   };
 
   const prevStory = () => {
     const prevIndex = currentIndex === 0 ? stories.length - 1 : currentIndex - 1;
-    scrollToIndex(prevIndex);
+    setCurrentIndex(prevIndex);
   };
 
   return (
@@ -129,117 +135,22 @@ const SuccessStories = () => {
             </Button>
           </div>
 
-          {/* Stories Carousel - Continuous Scroll */}
+          {/* Stories Carousel - One by One Slide */}
           <div 
-            className="overflow-hidden"
+            className="relative overflow-hidden"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <div
-              className={`flex space-x-6 ${!isHovered ? 'animate-continuous-scroll' : ''} hover:animation-paused`}
-              style={{ width: `${stories.length * 2 * 100}%` }}
+            <div 
+              className="flex transition-transform duration-800 ease-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {/* First set of stories */}
               {stories.map((story, index) => (
                 <div
-                  key={`first-${story.company}`}
-                  className="flex-shrink-0 w-full max-w-4xl bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300 mr-6"
+                  key={story.company}
+                  className="flex-shrink-0 w-full bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300"
                 >
-                  <div className="grid md:grid-cols-2 gap-8">
-                    {/* Company Info */}
-                    <div className="space-y-6">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center text-2xl">
-                          {story.logo}
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-primary">
-                            {story.company}
-                          </h3>
-                          <p className="text-muted-foreground">{story.industry}</p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Challenge</h4>
-                          <p className="text-muted-foreground">{story.challenge}</p>
-                        </div>
-                        
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Solution</h4>
-                          <p className="text-muted-foreground">{story.solution}</p>
-                        </div>
-                        
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Result</h4>
-                          <p className="text-muted-foreground">{story.result}</p>
-                        </div>
-                      </div>
-
-                      {/* Metrics */}
-                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.timeReduction}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Time Reduction
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.costSavings}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Cost Savings
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.satisfaction}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Satisfaction
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Testimonial */}
-                    <div className="space-y-6">
-                      <blockquote className="text-lg leading-relaxed text-foreground">
-                        "{story.quote}"
-                      </blockquote>
-                      
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
-                          <span className="text-white font-semibold">
-                            {story.author.split(' ').map(n => n[0]).join('')}
-                          </span>
-                        </div>
-                        <div>
-                          <div className="font-semibold text-primary">{story.author}</div>
-                          <div className="text-muted-foreground">{story.title}</div>
-                        </div>
-                      </div>
-
-                      <Link to="/success-stories" className="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors group">
-                        <span className="font-medium">Read Full Case Study</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              {/* Duplicate set for seamless loop */}
-              {stories.map((story, index) => (
-                <div
-                  key={`second-${story.company}`}
-                  className="flex-shrink-0 w-full max-w-4xl bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300 mr-6"
-                >
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
                     {/* Company Info */}
                     <div className="space-y-6">
                       <div className="flex items-center space-x-4">
