@@ -11,6 +11,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import SuccessStories from "@/components/SuccessStories";
+import ClientLogos from "@/components/ClientLogos";
+import FAQ from "@/components/FAQ";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
@@ -64,40 +67,20 @@ const Contact = () => {
   const trustSignals = [
     {
       icon: Clock,
-      title: "Free Consultation",
-      description: "No-obligation discussion about your hiring needs"
+      title: "Dedicated Support",
+      description: "Assistance from dedicated industry expert Recruiter"
+    },
+    {
+      icon: Shield,
+      title: "Guaranteed results",
+      description: "90-day replacement guarantee on all hires"
     },
     {
       icon: DollarSign,
       title: "No Setup Fees",
       description: "Get started immediately with zero upfront costs"
-    },
-    {
-      icon: Shield,
-      title: "Results Guaranteed",
-      description: "90-day replacement guarantee on all hires"
     }
-  ];
 
-  const quickStories = [
-    {
-      company: "TechCorp Solutions",
-      logo: "💻",
-      result: "Hired 15 developers in 8 days",
-      savings: "$200K saved"
-    },
-    {
-      company: "FinanceFirst Bank",
-      logo: "🏦",
-      result: "8 compliance officers in 12 days",
-      savings: "$150K saved"
-    },
-    {
-      company: "HealthPlus Medical",
-      logo: "🏥",
-      result: "25 nurses in 14 days",
-      savings: "$120K saved"
-    }
   ];
 
   const hiringRoles = [
@@ -119,13 +102,13 @@ const Contact = () => {
       
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-hero text-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in">
+        <section className="py-10 bg-gradient-hero text-white">
+          <div className="max-w-1xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-1xl sm:text-3xl font-bold mb-3 animate-fade-in">
               Let's Transform Your Hiring Process
             </h1>
-            <p className="text-xl text-white/90 animate-slide-up animate-delay-100">
-              Get qualified candidates in 10 days with 35% cost reduction
+            <p className="text-lg text-white/90 animate-slide-up animate-delay-100">
+              Hire qualified candidates in just 10 days while reducing your hiring costs by 35%
             </p>
           </div>
         </section>
@@ -136,7 +119,7 @@ const Contact = () => {
             <div className="animate-slide-in-left">
               <div className="bg-white rounded-2xl shadow-strong p-8">
                 <h2 className="text-2xl font-bold text-primary mb-6">
-                  Contact Our Sales Team
+                  Get in Touch with Our Sales Team
                 </h2>
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -240,15 +223,15 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Trust Signals & Stories */}
-            <div className="space-y-8 animate-slide-in-right">
-              {/* Trust Signals */}
-              <div className="bg-white rounded-2xl shadow-strong p-8">
+            {/* Trust Signals & Your AI Recruitment Journey Sections */}
+            <div className="animate-slide-in-right flex flex-col w-full max-w-lg space-y-8">
+              {/* Why Choose Careerfit.AI? */}
+              <section className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300 w-full">
                 <h3 className="text-xl font-bold text-primary mb-6">
                   Why Choose Careerfit.AI?
                 </h3>
                 <div className="space-y-6">
-                  {trustSignals.map((signal, index) => (
+                  {trustSignals.map((signal) => (
                     <div key={signal.title} className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-gradient-hero rounded-xl flex items-center justify-center flex-shrink-0">
                         <signal.icon className="w-6 h-6 text-white" />
@@ -257,49 +240,32 @@ const Contact = () => {
                         <h4 className="font-semibold text-primary mb-1">
                           {signal.title}
                         </h4>
-                        <p className="text-muted-foreground">
-                          {signal.description}
-                        </p>
+                        <p className="text-muted-foreground">{signal.description}</p>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
-              {/* Quick Success Stories */}
-              <div className="bg-white rounded-2xl shadow-strong p-8">
-                <h3 className="text-xl font-bold text-primary mb-6">
-                  Recent Success Stories
-                </h3>
-                <div className="space-y-6">
-                  {quickStories.map((story, index) => (
-                    <div key={story.company} className="border border-border rounded-xl p-4 hover:shadow-medium transition-all">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center text-lg">
-                          {story.logo}
-                        </div>
-                        <h4 className="font-semibold text-primary">
-                          {story.company}
-                        </h4>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <div className="text-secondary font-medium">
-                            {story.result}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-secondary font-medium">
-                            {story.savings}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* Your AI Recruitment Journey */}
+              <section
+                className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 w-full cursor-pointer transform hover:-translate-y-1"
+                role="region"
+                aria-label="Your AI Recruitment Journey"
+              >
+                <h3 className="text-lg font-bold text-primary mb-4">Your AI Recruitment Journey</h3>
+                <ul className="text-muted-foreground list-disc list-inside space-y-1 text-base">
+                  <li>✓ We'll contact you within 24 hours</li>
+                  <li>✓ A quick discovery call about your hiring needs</li>
+                  <li>✓ Tailored strategy combining technology and human expertise</li>
+                  <li>✓ Start receiving pre-screened candidates within 5 days</li>
+                </ul>
+              </section>
             </div>
           </div>
+           <ClientLogos />
+           <SuccessStories />
+           <FAQ />
         </div>
       </main>
 

@@ -1,22 +1,42 @@
-import { Users, Target, Zap, Shield, Award, ArrowRight } from "lucide-react";
+import { Users, Target, Zap, Shield, Award, ArrowRight, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import atulImg from "@/assets/Team/atul_kumar.jpeg";
+import reenalImg from "@/assets/Team/reenal_rawal.jpeg";
+import sakshiImg from "@/assets/Team/Sakshi.jpeg";
+import akshataImg from "@/assets/Team/akshata_pawar.jpeg";
+import nishaImg from "@/assets/Team/Nisha.jpeg";
+import asmitaImg from "@/assets/Team/asmita_singh.jpeg";
+import deveshImg from "@/assets/Team/Devesh_Bhosale.jpeg";
+import { Rocket, Star } from "lucide-react";
 
 const About = () => {
   const teamMembers = [
-    {
-      name: "Atul Kumar",
-      role: "Founder",
-      description: "Visionary leader driving AI innovation in recruitment",
-      initials: "AK"
-    },
+  {
+    name: "Atul Kumar",
+    role: "Founder",
+    description: "Visionary leader driving AI innovation in recruitment",
+    image: atulImg,
+  },
+  {
+    name: "Asmita Singh",
+    role: "Lead - Talent Acquisition",
+    description: "Driving strategies with a focus on quality hires and team leadership",
+    image: asmitaImg,
+  },
+  {
+    name: "Devesh Bhosale",
+    role: "Lead - Talent Acquisition",
+    description: "Builds high-performance teams through leading recruitment",
+    image: deveshImg,
+  },
     {
       name: "Reenal Rawal",
       role: "Talent Acquisition Specialist",
       description: "Expert in matching top talent with perfect opportunities",
-      initials: "RR"
+      image: reenalImg,
     },
     {
       name: "Taslim Patel",
@@ -28,19 +48,19 @@ const About = () => {
       name: "Sakshi Rajapurkar",
       role: "Talent Acquisition Executive",
       description: "Dedicated to delivering exceptional hiring experiences",
-      initials: "SR"
+      image: sakshiImg,
     },
     {
       name: "Akshata Pawar",
       role: "Senior Talent Acquisition Specialist",
       description: "Strategic hiring expert with deep industry knowledge",
-      initials: "AP"
+      image: akshataImg,
     },
     {
       name: "Nisha Shinde",
       role: "Senior Talent Acquisition Specialist",
       description: "Results-driven professional focused on quality placements",
-      initials: "NS"
+      image: nishaImg,
     },
     {
       name: "Sana Shaikh",
@@ -84,54 +104,63 @@ const About = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="bg-gradient-hero text-white py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in">
-              AI-Powered Hiring, Human-Centric Approach
-            </h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto animate-fade-in animate-delay-200">
-              We combine cutting-edge artificial intelligence with deep human expertise to revolutionize 
-              how companies find and hire exceptional talent.
-            </p>
-          </div>
-        </section>
+      <main className="pt-10">
 
-        {/* Mission & Vision */}
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="animate-slide-in-left">
-                <h2 className="text-3xl font-bold text-primary mb-6">Our Mission</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  To transform the hiring landscape by making exceptional talent accessible to every company, 
-                  regardless of size or industry. We exist to eliminate the inefficiencies, biases, and 
-                  frustrations that plague traditional recruitment.
-                </p>
-                <div className="bg-gradient-subtle p-6 rounded-lg">
-                  <p className="text-foreground font-medium">
-                    "Every great company is built on great people. Our mission is to help you find yours."
-                  </p>
-                </div>
-              </div>
-              
-              <div className="animate-slide-in-right">
-                <h2 className="text-3xl font-bold text-primary mb-6">Our Vision</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  To become the global standard for intelligent recruitment, where every hire is a perfect 
-                  match, every process is transparent, and every outcome exceeds expectations. We envision 
-                  a world where finding the right talent is no longer a challenge.
-                </p>
-                <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
-                  <p className="text-foreground font-medium">
-                    "Building the future of work, one perfect hire at a time."
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Mission */}
+<section className="py-20 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="animate-slide-in-left">
+      <h2 className="text-3xl font-bold mb-6 flex items-center space-x-3 text-orange-600">
+        <Rocket 
+          className="w-8 h-8 text-orange-600 animate-spin-slow" 
+          strokeWidth={1.5} 
+        />
+        <span>Our Mission</span>
+      </h2>
+
+      <p className="text-lg text-black leading-relaxed mb-8">
+        Our mission is to fundamentally transform the hiring landscape, making truly exceptional talent readily accessible to every company, regardless of their size, industry, or geographical location. We envision a future where the perfect candidate is never out of reach, and businesses can build the teams they need to innovate and thrive without the historical barriers that have plagued recruitment. We are committed to leveling the playing field, ensuring that both established enterprises and burgeoning startups have equal opportunities to secure the best human capital available.<br />
+        <br />
+        We are dedicated to meticulously dismantling the pervasive inefficiencies, inherent biases, and frustrating experiences that currently define traditional recruitment methods. This includes streamlining outdated processes, leveraging advanced technologies to identify potential without prejudice, and creating a transparent and equitable system for all participants. Our goal is to move beyond the superficial aspects of a resume and delve into the true capabilities and potential of each individual, fostering a meritocratic environment where skills and aptitude are paramount.<br />
+        <br />
+        Ultimately, we strive to foster a more equitable, efficient, and effective talent acquisition ecosystem. By creating a seamless bridge between exceptional talent and deserving opportunities, we empower individuals to reach their full professional potential and enable companies to achieve unprecedented growth and innovation. We believe that by revolutionizing how talent is discovered and integrated, we can contribute to a more prosperous and dynamic global economy for everyone.
+      </p>
+
+      <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
+        <p className="text-foreground font-medium">
+          "Every great company is built on great people. Our mission is to help you find yours."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{/* Vision */}
+<section className="-py-10 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="animate-slide-in-right">
+      <h2 className="text-3xl font-bold mb-6 flex items-center space-x-3 text-blue-600">
+        <Star 
+          className="w-8 h-8 text-blue-600 animate-pulse" 
+          strokeWidth={1.5}
+        />
+        <span>Our Vision</span>
+      </h2>
+
+      <p className="text-lg text-black leading-relaxed mb-8">
+        To revolutionize recruitment by setting the global standard for intelligent matching, ensuring every hire is a perfect fit, every process is transparent, and every outcome surpasses expectations. We are dedicated to creating a world where discovering the right talent is not just seamless, but consistently successful, fostering growth and innovation for businesses and individuals alike.<br />
+        <br />Our advanced platform leverages AI algorithms to analyze vast datasets, identifying candidates with the precise skills, experience, and cultural fit required for each role.
+        Our approach minimizes bias, and significantly accelerates the hiring timeline. We empower organizations to build stronger teams and individuals to achieve their career aspirations.    </p>
+      <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
+        <p className="text-foreground font-medium">
+          "Building the future of work, one perfect hire at a time."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
         {/* Why Choose Us */}
         <section className="py-20 bg-gradient-subtle">
@@ -231,9 +260,20 @@ const About = () => {
                   key={member.name}
                   className={`bg-white p-6 rounded-2xl shadow-medium hover:shadow-strong transition-all duration-300 text-center animate-scale-in animate-delay-${(index + 1) * 100}`}
                 >
-                  <div className="w-20 h-20 bg-gradient-hero rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">{member.initials}</span>
-                  </div>
+                  <div className="w-28 h-28 rounded-full overflow-hidden mx-auto mb-4">
+                    {(member.name === "Taslim Patel" || member.name === "Sana Shaikh") || !member.image ? (
+                      <div className="bg-gradient-hero flex items-center justify-center w-full h-full">
+                        <span className="text-white font-bold text-lg">{member.initials}</span>
+                        </div>
+                        ) : (
+                        <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                         />
+                          )}</div>
+
+
                   <h3 className="text-xl font-semibold text-primary mb-2">{member.name}</h3>
                   <p className="text-secondary font-medium mb-3">{member.role}</p>
                   <p className="text-muted-foreground text-sm">{member.description}</p>
@@ -288,14 +328,16 @@ const About = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link to="/contact">
-                  <Button className="bg-white text-primary hover:bg-white/90 px-8 py-4 text-lg font-semibold">
+                  <Button className="bg-white text-primary hover:bg-white/90 font-semibold text-lg px-10 py-4 shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105">
                     Get Started
                   </Button>
                 </Link>
                 <Link to="/success-stories">
-                  <Button variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold">
+                  <Button variant="outline" className="bg-white text-primary hover:bg-white/90 font-semibold text-lg px-10 py-4 shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
+>
                     View Success Stories
                   </Button>
+
                 </Link>
               </div>
             </div>
@@ -315,14 +357,14 @@ const About = () => {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <a
                   href="mailto:team@careerfit.ai"
-                  className="flex items-center space-x-2 text-primary hover:text-secondary transition-colors group"
+                  className="flex items-center space-x-2 text-primary hover:text-secondary transition-colors group shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
                 >
                   <span className="font-medium">team@careerfit.ai</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a
                   href="tel:+918885005749"
-                  className="flex items-center space-x-2 text-primary hover:text-secondary transition-colors group"
+                  className="flex items-center space-x-2 text-primary hover:text-secondary transition-colors group shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
                 >
                   <span className="font-medium">+91 8885005749</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

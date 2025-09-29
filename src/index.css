@@ -17,11 +17,11 @@
     --popover-foreground: 195 100% 15%;
 
     /* Primary: Vibrant blue (#0044cc) for headlines and CTAs */
-    --primary: 220 100% 40%;
+    --primary: 248 76% 17%;
     --primary-foreground: 0 0% 100%;
     
     /* Secondary: Teal (#008080) for base gradient */
-    --secondary: 180 100% 25%;
+    --secondary: 197 100% 25%;
     --secondary-foreground: 0 0% 100%;
 
     /* Muted variants for subtle backgrounds */

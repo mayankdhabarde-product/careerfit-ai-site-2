@@ -1,243 +1,264 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Users, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 
-const SuccessStories = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+interface SuccessStoriesProps {
+  compact?: boolean;
+}
+
+const SuccessStories: React.FC<SuccessStoriesProps> = ({ compact = false }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const stories = [
     {
+      id: "pharmeasy",
       company: "TechCorp Solutions",
-      logo: "💻",
       industry: "Technology",
-      challenge: "Needed 15 senior developers within 30 days for a critical product launch",
-      solution: "AI-powered screening identified top-tier talent from our global network",
-      result: "Hired 15 developers in 8 days, launched on schedule, saved $200K in recruitment costs",
-      quote: "Careerfit.AI transformed our hiring process. What usually takes months was completed in just over a week with exceptional quality candidates.",
+      logo: "https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      challenge: "Needed to scale dev team rapidly for product launch",
+      solution: "AI-powered matching found 15 senior developers in 3 weeks",
+      result: "Reduced hiring time by 60% and accelerated product launch",
+      quote: "Careerfit.AI transformed our hiring process. We found exceptional talent faster than ever before.",
       author: "Sarah Chen",
-      title: "VP of Engineering",
-      metrics: {
-        timeReduction: "80%",
-        costSavings: "$200K",
-        satisfaction: "98%"
-      }
+      title: "CTO, TechCorp Solutions",
+      metrics: [
+        { label: "Time to Hire", value: "8 days", icon: Clock },
+        { label: "Developers Hired", value: "15", icon: Users },
+        { label: "Time Reduction", value: "60%", icon: TrendingUp },
+      ],
     },
     {
-      company: "FinanceFirst Bank",
-      logo: "🏦",
+      id: "zomato",
+      company: "FinanceFlow Inc",
       industry: "Financial Services",
-      challenge: "Urgent need for compliance officers with specific regulatory experience",
-      solution: "Specialized screening for financial regulations and risk management expertise",
-      result: "Filled 8 compliance positions in 12 days with 100% retention rate after 6 months",
-      quote: "The depth of their candidate vetting process is unmatched. Every hire has exceeded our expectations.",
+      logo: "https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      challenge: "Required specialized fintech talent with regulatory knowledge",
+      solution: "Targeted search within fintech ecosystem with compliance expertise",
+      result: "Built complete fintech team with 40% cost reduction",
+      quote: "The quality of candidates and speed of delivery exceeded all our expectations. Game-changing partnership.",
       author: "Michael Rodriguez",
-      title: "Chief Compliance Officer",
-      metrics: {
-        timeReduction: "75%",
-        costSavings: "$150K",
-        satisfaction: "100%"
-      }
+      title: "Head of Talent, FinanceFlow Inc",
+      metrics: [
+        { label: "Cost Reduction", value: "40%", icon: TrendingUp },
+        { label: "Roles Filled", value: "12", icon: Users },
+        { label: "Success Rate", value: "100%", icon: Clock },
+      ],
     },
     {
-      company: "HealthPlus Medical",
-      logo: "🏥",
-      industry: "Healthcare",
-      challenge: "Critical shortage of specialized nurses during expansion",
-      solution: "Targeted outreach to certified professionals with required specializations",
-      result: "Hired 25 nurses in 14 days, all with perfect credentials and cultural fit",
-      quote: "Their understanding of healthcare requirements and urgency helped us staff our new facility seamlessly.",
-      author: "Dr. Jennifer Park",
-      title: "Chief Medical Officer",
-      metrics: {
-        timeReduction: "70%",
-        costSavings: "$120K",
-        satisfaction: "95%"
-      }
-    }
+      id: "swiggy",
+      company: "HealthTech Innovations",
+      industry: "Healthcare Technology",
+      logo: "https://images.pexels.com/photos/4393668/pexels-photo-4393668.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      challenge: "Building healthcare AI team with medical domain expertise",
+      solution: "Specialized healthcare tech recruitment with AI/ML focus",
+      result: "Assembled world-class team with 98% retention rate",
+      quote: "Careerfit.AI understood our unique needs and delivered exceptional healthcare tech talent.",
+      author: "Dr. Emily Watson",
+      title: "Founder, HealthTech Innovations",
+      metrics: [
+        { label: "Retention Rate", value: "98%", icon: TrendingUp },
+        { label: "Team Members", value: "8", icon: Users },
+        { label: "Time to Build", value: "4 weeks", icon: Clock },
+      ],
+    },
+    {
+      id: "byju",
+      company: "EduLearn Platform",
+      industry: "Education Technology",
+      logo: "https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      challenge: "Needed senior product manager with EdTech and AI experience",
+      solution: "Deep EdTech network search with personalized learning expertise",
+      result: "Found perfect candidate in 6 days, 25% user engagement boost",
+      quote: "The cultural fit and technical expertise of our new hire has been phenomenal. Exactly what we needed.",
+      author: "David Kim",
+      title: "CEO, EduLearn Platform",
+      metrics: [
+        { label: "Time to Hire", value: "6 days", icon: Clock },
+        { label: "Engagement Boost", value: "+25%", icon: TrendingUp },
+        { label: "Cultural Fit", value: "100%", icon: Users },
+      ],
+    },
+    {
+      id: "paytm",
+      company: "RetailTech Solutions",
+      industry: "Retail Technology",
+      logo: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      challenge: "Executive search for VP Engineering with retail tech experience",
+      solution: "Executive search with leadership assessment and cultural alignment",
+      result: "Perfect leadership hire who scaled engineering team 3x",
+      quote: "Our VP Engineering hire has been transformational. Perfect blend of technical expertise and leadership.",
+      author: "Lisa Thompson",
+      title: "CEO, RetailTech Solutions",
+      metrics: [
+        { label: "Team Growth", value: "3x", icon: TrendingUp },
+        { label: "Leadership Score", value: "10/10", icon: Users },
+        { label: "Cultural Fit", value: "Perfect", icon: Clock },
+      ],
+    },
   ];
-  
-  // Auto-slide functionality
+
+  const displayStories = compact ? stories.slice(0, 3) : stories;
+
   useEffect(() => {
-    if (isHovered || isAnimating) return;
-    
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % stories.length);
-      setTimeout(() => setIsAnimating(false), 800); // Match transition duration
-    }, 2000); // 2 second delay
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % displayStories.length);
+    }, 5000);
 
-    return () => clearInterval(interval);
-  }, [isHovered, isAnimating, stories.length]);
+    return () => clearInterval(timer);
+  }, [displayStories.length]);
 
-  const scrollToIndex = (index: number) => {
-    setCurrentIndex(index);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % displayStories.length);
   };
 
-  const nextStory = () => {
-    const nextIndex = (currentIndex + 1) % stories.length;
-    setCurrentIndex(nextIndex);
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + displayStories.length) % displayStories.length);
   };
 
-  const prevStory = () => {
-    const prevIndex = currentIndex === 0 ? stories.length - 1 : currentIndex - 1;
-    setCurrentIndex(prevIndex);
-  };
+
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-            Success Stories
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See how we've helped companies transform their hiring process and build exceptional teams
-          </p>
-        </div>
-
-        <div className="relative">
-          {/* Navigation Buttons */}
-          <div className="flex justify-between items-center mb-8">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={prevStory}
-              className="rounded-full shadow-medium hover:shadow-strong transition-all"
-              aria-label="Previous story"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-            
-            <div className="flex space-x-2">
-              {stories.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => scrollToIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    index === currentIndex ? "bg-primary" : "bg-muted"
-                  }`}
-                  aria-label={`Go to story ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={nextStory}
-              className="rounded-full shadow-medium hover:shadow-strong transition-all"
-              aria-label="Next story"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
+    <section className={`${compact ? 'py-12' : 'py-20'} bg-gradient-to-br from-blue-50 to-teal-50`} id="success-stories" aria-label="Client Success Stories">
+      <div className="container mx-auto px-4">
+        {!compact && (
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4" id="success-stories-heading">
+              Success Stories
+            </h2>
+            <p className="text-xl text-gray-600 max-w-5xl mx-auto">
+              See how we’ve accelerated recruitment timelines and cut costs for companies across industries
+            </p>
           </div>
+        )}
+        
+        {compact && (
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-2" id="compact-success-stories">
+              Client Success Stories
+            </h3>
+          </div>
+        )}
 
-          {/* Stories Carousel - One by One Slide */}
-          <div 
-            className="relative overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <div 
-              className="flex transition-transform duration-800 ease-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        <div className="relative max-w-6xl mx-auto" role="region" aria-labelledby={compact ? "compact-success-stories" : "success-stories-heading"}>
+          <div className="overflow-hidden rounded-2xl">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              {stories.map((story, index) => (
+              {displayStories.map((story, index) => (
                 <div
-                  key={story.company}
-                  className="flex-shrink-0 w-full bg-card rounded-2xl shadow-strong p-8 border border-border hover:shadow-medium transition-all duration-300"
+                  key={index}
+                  className="w-full flex-shrink-0 px-4"
+                  role="article"
+                  aria-label={`AI recruitment success story for ${story.company}`}
                 >
-                  <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    {/* Company Info */}
-                    <div className="space-y-6">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-16 h-16 bg-gradient-hero rounded-xl flex items-center justify-center text-2xl">
-                          {story.logo}
-                        </div>
+                  <div className="bg-white rounded-xl shadow-xl p-6 lg:p-8 h-full">
+                    <div className="flex flex-col gap-8">
+                      {/* Company Logo */}
+                      <div className="flex items-center gap-4">
+                        <img 
+                          src={story.logo} 
+                          alt={`${story.company} logo - AI recruitment success story client`}
+                          className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+                          loading="lazy"
+                        />
                         <div>
-                          <h3 className="text-xl font-bold text-primary">
-                            {story.company}
-                          </h3>
-                          <p className="text-muted-foreground">{story.industry}</p>
+                          <h3 className="text-xl font-bold text-gray-900">{story.company}</h3>
+                          <p className="text-gray-600">{story.industry}</p>
                         </div>
                       </div>
 
+                      {/* Content */}
                       <div className="space-y-4">
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Challenge</h4>
-                          <p className="text-muted-foreground">{story.challenge}</p>
+                        {/* Challenge, Solution, Result */}
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="font-semibold text-gray-900 mb-1 text-sm">Challenge:</h4>
+                            <p className="text-gray-600 text-sm">{story.challenge}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 mb-1 text-sm">Solution:</h4>
+                            <p className="text-gray-600 text-sm">{story.solution}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900 mb-1 text-sm">Result:</h4>
+                            <p className="text-gray-600 text-sm">{story.result}</p>
+                          </div>
                         </div>
                         
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Solution</h4>
-                          <p className="text-muted-foreground">{story.solution}</p>
+                        {/* Quote */}
+                        <blockquote className="text-base text-gray-700 leading-relaxed italic border-l-4 border-blue-900 pl-4">
+                          "{story.quote}"
+                        </blockquote>
+                        
+                        {/* Author */}
+                        <div className="text-center">
+                          <p className="font-semibold text-gray-900 text-sm">{story.author}</p>
+                          <p className="text-gray-600 text-xs">{story.title}</p>
                         </div>
                         
-                        <div>
-                          <h4 className="font-semibold text-primary mb-2">Result</h4>
-                          <p className="text-muted-foreground">{story.result}</p>
+                        {/* Metrics */}
+                        <div className="grid grid-cols-3 gap-4">
+                          {story.metrics.map((metric, metricIndex) => (
+                            <div key={metricIndex} className="text-center p-2 bg-gray-50 rounded-lg">
+                              <div className="inline-flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full mb-2">
+                                <metric.icon className="w-4 h-4 text-blue-900" />
+                              </div>
+                              <div className="text-base font-bold text-blue-900">{metric.value}</div>
+                              <div className="text-xs text-gray-600">{metric.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* CTA Button */}
+                        <div className="text-center">
+                          <Link
+                            to="/success-stories"
+                            className="inline-flex items-center text-blue-900 hover:text-teal-600 font-semibold underline decoration-2 underline-offset-2 transition-colors text-sm"
+                            aria-label={`Read full case study for ${story.company}`}
+                          >
+                            Read Full Case Study →
+                          </Link>
                         </div>
                       </div>
-
-                      {/* Metrics */}
-                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.timeReduction}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Time Reduction
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.costSavings}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Cost Savings
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-secondary">
-                            {story.metrics.satisfaction}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Satisfaction
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Testimonial */}
-                    <div className="space-y-6">
-                      <blockquote className="text-lg leading-relaxed text-foreground">
-                        "{story.quote}"
-                      </blockquote>
-                      
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-hero rounded-full flex items-center justify-center">
-                          <span className="text-white font-semibold">
-                            {story.author.split(' ').map(n => n[0]).join('')}
-                          </span>
-                        </div>
-                        <div>
-                          <div className="font-semibold text-primary">{story.author}</div>
-                          <div className="text-muted-foreground">{story.title}</div>
-                        </div>
-                      </div>
-
-                      <Link to="/success-stories" className="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors group">
-                        <span className="font-medium">Read Full Case Study</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute -left-10 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-shadow z-10"
+            aria-label="Previous success story"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className="absolute -right-10 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-shadow z-10"
+            aria-label="Next success story"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-8 space-x-2" role="tablist" aria-label="Success story navigation">
+            {displayStories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  currentSlide === index ? 'bg-blue-900' : 'bg-gray-300'
+                }`}
+                role="tab"
+                aria-selected={currentSlide === index}
+                aria-label={`Go to AI recruitment success story ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
