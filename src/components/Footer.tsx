@@ -28,7 +28,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">C</span>
               </div>
-              <span className="text-xl font-bold">Careerfit.AI</span>
+              <span className="text-xl font-bold">Careerfit.ai</span>
             </Link>
             
             <p className="text-white/80 leading-relaxed">
@@ -50,10 +50,10 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-secondary" />
                 <a 
-                  href="mailto:team@careerfit.ai" 
+                  href="mailto:team@Careerfit.ai" 
                   className="text-white/80 hover:text-white transition-colors"
                 >
-                  team@careerfit.ai
+                  team@Careerfit.ai
                 </a>
               </div>
             </div>
@@ -100,14 +100,14 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex space-x-4 mb-8">
               <a
-                href="https://linkedin.com/company/careerfit-ai"
+                href="https://linkedin.com/company/Careerfit.ai-ai"
                 className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary transition-colors"
                 aria-label="Follow us on LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="https://x.com/careerfit_ai"
+                href="https://x.com/Careerfit.ai_ai"
                 className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary transition-colors"
                 aria-label="Follow us on Twitter"
               >
@@ -137,7 +137,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="py-6 border-t border-white/10 text-center">
           <p className="text-white/60">
-            © {new Date().getFullYear()} Careerfit.AI. All rights reserved.
+            © {new Date().getFullYear()} Careerfit.ai. All rights reserved.
           </p>
         </div>
       </div>

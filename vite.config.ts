@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/careerfit-ai-site-2/",  // Add this line with your repo name
   server: {
     host: "::",
     port: 8080,
@@ -16,3 +17,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+

@@ -225,10 +225,10 @@ const Contact = () => {
 
             {/* Trust Signals & Your AI Recruitment Journey Sections */}
             <div className="animate-slide-in-right flex flex-col w-full max-w-lg space-y-8">
-              {/* Why Choose Careerfit.AI? */}
+              {/* Why Choose Careerfit.ai? */}
               <section className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300 w-full">
                 <h3 className="text-xl font-bold text-primary mb-6">
-                  Why Choose Careerfit.AI?
+                  Why Choose Careerfit.ai?
                 </h3>
                 <div className="space-y-6">
                   {trustSignals.map((signal) => (

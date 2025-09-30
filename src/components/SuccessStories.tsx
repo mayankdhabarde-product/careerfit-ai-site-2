@@ -18,7 +18,7 @@ const SuccessStories: React.FC<SuccessStoriesProps> = ({ compact = false }) => {
       challenge: "Needed to scale dev team rapidly for product launch",
       solution: "AI-powered matching found 15 senior developers in 3 weeks",
       result: "Reduced hiring time by 60% and accelerated product launch",
-      quote: "Careerfit.AI transformed our hiring process. We found exceptional talent faster than ever before.",
+      quote: "Careerfit.ai transformed our hiring process. We found exceptional talent faster than ever before.",
       author: "Sarah Chen",
       title: "CTO, TechCorp Solutions",
       metrics: [
@@ -52,7 +52,7 @@ const SuccessStories: React.FC<SuccessStoriesProps> = ({ compact = false }) => {
       challenge: "Building healthcare AI team with medical domain expertise",
       solution: "Specialized healthcare tech recruitment with AI/ML focus",
       result: "Assembled world-class team with 98% retention rate",
-      quote: "Careerfit.AI understood our unique needs and delivered exceptional healthcare tech talent.",
+      quote: "Careerfit.ai understood our unique needs and delivered exceptional healthcare tech talent.",
       author: "Dr. Emily Watson",
       title: "Founder, HealthTech Innovations",
       metrics: [

@@ -167,7 +167,7 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 animate-fade-in">
               <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-                Why Choose Careerfit.AI?
+                Why Choose Careerfit.ai?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Our unique blend of AI technology and human expertise sets us apart in the recruitment industry
@@ -250,7 +250,7 @@ const About = () => {
                 Meet Our Team
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                The talented professionals behind Careerfit.AI's success
+                The talented professionals behind Careerfit.ai's success
               </p>
             </div>
 
@@ -322,7 +322,7 @@ const About = () => {
                 Ready to Transform Your Hiring?
               </h2>
               <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-                Join the companies who trust Careerfit.AI to build their exceptional teams. 
+                Join the companies who trust Careerfit.ai to build their exceptional teams. 
                 Let's create your success story together.
               </p>
               
@@ -356,10 +356,10 @@ const About = () => {
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <a
-                  href="mailto:team@careerfit.ai"
+                  href="mailto:team@Careerfit.ai"
                   className="flex items-center space-x-2 text-primary hover:text-secondary transition-colors group shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
                 >
-                  <span className="font-medium">team@careerfit.ai</span>
+                  <span className="font-medium">team@Careerfit.ai</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a

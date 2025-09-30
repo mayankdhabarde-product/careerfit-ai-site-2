@@ -5,31 +5,31 @@ const ComparisonTable = () => {
     {
       category: "Average Time to Hire",
       traditional: "45+ days",
-      careerfit: "10 days",
+      "Careerfit.ai": "10 days",
       isAdvantage: true,
     },
     {
       category: "Candidate Quality",
       traditional: "Mixed results",
-      careerfit: "Pre-screened experts",
+      "Careerfit.ai": "Pre-screened experts",
       isAdvantage: true,
     },
     {
       category: "Cost Efficiency",
       traditional: "High overhead",
-      careerfit: "35% cost reduction",
+      "Careerfit.ai": "35% cost reduction",
       isAdvantage: true,
     },
     {
       category: "Process Transparency",
       traditional: "Limited updates",
-      careerfit: "Real-time tracking",
+      "Careerfit.ai": "Real-time tracking",
       isAdvantage: true,
     },
     {
       category: "Industry Expertise",
       traditional: "General approach",
-      careerfit: "Specialized knowledge",
+      "Careerfit.ai": "Specialized knowledge",
       isAdvantage: true,
     },
   ];
@@ -39,7 +39,7 @@ const ComparisonTable = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-            Traditional vs. Careerfit.AI
+            Traditional vs. Careerfit.ai
           </h2>
           <p className="text-lg text-muted-foreground">
             See how we stack up against traditional recruitment methods
@@ -56,7 +56,7 @@ const ComparisonTable = () => {
                     Traditional Recruiting
                   </th>
                   <th className="px-6 py-4 text-center font-semibold bg-secondary">
-                    Careerfit.AI
+                    Careerfit.ai
                   </th>
                 </tr>
               </thead>
@@ -83,7 +83,8 @@ const ComparisonTable = () => {
                       <div className="flex items-center justify-center space-x-2">
                         <Check className="w-5 h-5 text-green-500" />
                         <span className="font-semibold text-secondary">
-                          {item.careerfit}
+                          {item["Careerfit.ai"]}
+
                         </span>
                       </div>
                     </td>
