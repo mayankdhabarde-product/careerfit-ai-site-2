@@ -16,12 +16,14 @@ import ClientLogos from "@/components/ClientLogos";
 import FAQ from "@/components/FAQ";
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
-  company: z.string().trim().min(2, "Company name is required").max(100, "Company name must be less than 100 characters"),
-  email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
+  fullName: z.string().trim().min(2, "Full Name must be at least 2 characters").max(100, "Full Name must be less than 100 characters"),
+  companyName: z.string().trim().min(2, "Company name is required").max(100, "Company name must be less than 100 characters"),
   phone: z.string().trim().min(10, "Please enter a valid phone number").max(20, "Phone number must be less than 20 characters"),
-  hiringRole: z.string().min(1, "Please select a hiring role"),
-  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters"),
+  email: z.string().email("Please enter a valid email address").max(255, "Email must be less than 255 characters").optional().or(z.literal("")),
+  requirementSummary: z.string().max(1000).optional().or(z.literal("")),
+  jobDescription: z.any().optional(),
+  ctcMin: z.number().min(0).optional(),
+  ctcMax: z.number().min(0).optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -42,16 +44,16 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    
+
     try {
       // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       toast({
         title: "Thank you for your interest!",
         description: "Our sales team will contact you within 24 hours.",
       });
-      
+
       reset();
     } catch (error) {
       toast({
@@ -68,38 +70,24 @@ const Contact = () => {
     {
       icon: Clock,
       title: "Dedicated Support",
-      description: "Assistance from dedicated industry expert Recruiter"
+      description: "Assistance from dedicated industry expert Recruiter",
     },
     {
       icon: Shield,
       title: "Guaranteed results",
-      description: "90-day replacement guarantee on all hires"
+      description: "90-day replacement guarantee on all hires",
     },
     {
       icon: DollarSign,
       title: "No Setup Fees",
-      description: "Get started immediately with zero upfront costs"
-    }
-
-  ];
-
-  const hiringRoles = [
-    "Executive/C-Level",
-    "Engineering/Technology",
-    "Sales & Marketing",
-    "Finance & Accounting",
-    "Operations",
-    "Human Resources",
-    "Customer Success",
-    "Healthcare",
-    "Manufacturing",
-    "Other"
+      description: "Get started immediately with zero upfront costs",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navbar />
-      
+
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-10 bg-gradient-hero text-white">
@@ -117,119 +105,139 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <div className="animate-slide-in-left">
-              <div className="bg-white rounded-2xl shadow-strong p-8">
+              <div className="bg-white rounded-2xl shadow-strong p-8 border border-gray-900">
                 <h2 className="text-2xl font-bold text-primary mb-6">
-                  Get in Touch with Our Sales Team
+                  Get in Touch with Our Hiring Experts
                 </h2>
-                
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="name">Full Name *</Label>
-                      <Input
-                        id="name"
-                        {...register("name")}
-                        className="mt-1"
-                        placeholder="John Smith"
-                      />
-                      {errors.name && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                      )}
+                  {/* Basic Details */}
+                  <div>
+                    <h3 className="font-semibold mb-4">Basic Details</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="fullName">Full Name *</Label>
+                        <Input id="fullName" {...register("fullName")} className="mt-1" placeholder="John Smith" />
+                        {errors.fullName?.message && (
+                          <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <Label htmlFor="companyName">Company Name *</Label>
+                        <Input id="companyName" {...register("companyName")} className="mt-1" placeholder="Your Company Inc." />
+                        {errors.companyName?.message && (
+                          <p className="text-red-500 text-sm mt-1">{errors.companyName.message}</p>
+                        )}
+                      </div>
                     </div>
 
-                    <div>
-                      <Label htmlFor="company">Company *</Label>
-                      <Input
-                        id="company"
-                        {...register("company")}
-                        className="mt-1"
-                        placeholder="Your Company Inc."
-                      />
-                      {errors.company && (
-                        <p className="text-red-500 text-sm mt-1">{errors.company.message}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        {...register("email")}
-                        className="mt-1"
-                        placeholder="john@company.com"
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                      )}
-                    </div>
-
-                    <div>
+                    <div className="mt-4 md:max-w-xs">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        {...register("phone")}
-                        className="mt-1"
-                        placeholder="+1 (555) 123-4567"
-                      />
-                      {errors.phone && (
+                      <Input id="phone" {...register("phone")} className="mt-1" placeholder="+91 98765 43210" />
+                      {errors.phone?.message && (
                         <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
                       )}
                     </div>
+
+                    <div className="mt-4 md:max-w-xs">
+                      <Label htmlFor="email">Email (optional)</Label>
+                      <Input id="email" type="email" {...register("email")} className="mt-1" placeholder="john@company.com" />
+                      {errors.email?.message && (
+                        <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                      )}
+                    </div>
                   </div>
 
+                  {/* Requirement Summary */}
                   <div>
-                    <Label htmlFor="hiringRole">Primary Hiring Need *</Label>
-                    <Select onValueChange={(value) => setValue("hiringRole", value)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select hiring focus" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {hiringRoles.map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {role}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {errors.hiringRole && (
-                      <p className="text-red-500 text-sm mt-1">{errors.hiringRole.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="message">Tell us about your hiring needs *</Label>
+                    <h3 className="font-semibold mb-4">Describe your hiring needs</h3>
                     <Textarea
-                      id="message"
-                      {...register("message")}
-                      className="mt-1 min-h-32"
-                      placeholder="Describe your hiring challenges, timeline, and requirements..."
+                      {...register("requirementSummary")}
+                      className="mt-1 min-h-20 max-h-28"
+                      placeholder="E.g. Need 2 backend engineers; or looking to scale tech hiring"
                     />
-                    {errors.message && (
-                      <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
+                    {errors.requirementSummary?.message && (
+                      <p className="text-red-500 text-sm mt-1">{errors.requirementSummary.message}</p>
                     )}
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-hero w-full"
-                  >
-                    {isSubmitting ? "Sending..." : "Get Started Today"}
+                  {/* Optional Details */}
+                  <div className="border border-gray-900 rounded-md p-6">
+                    <h3 className="font-semibold mb-4">Job Details (Optional)</h3>
+                    
+                    {/* Drag and drop file upload box */}
+                    <div className="mb-4 relative">
+                      <Label htmlFor="jobDescription" className="block mb-3 cursor-pointer">
+                        Upload Job Description
+                      </Label>
+                      <div
+                        className="border-2 border-dashed border-gray-400 rounded-md p-2 flex items-center justify-center cursor-pointer text-gray-900 hover:border-primary hover:text-primary transition-colors duration-150 max-w-xs relative"
+                        onClick={() => {
+                          const fileInput = document.getElementById("jobDescription-input");
+                          fileInput?.click();
+                        }}
+                      >
+                        <span>Drag & drop file or click to select</span>
+                      </div>
+                      <input
+                        type="file"
+                        id="jobDescription-input"
+                        accept=".pdf,.doc,.docx"
+                        {...register("jobDescription")}
+                        className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      {errors.jobDescription?.message && (
+                        <p className="text-red-500 text-sm mt-1">{errors.jobDescription.message}</p>
+                      )}
+                    </div>
+
+                    {/* Offered CTC Range combined */}
+                    <div>
+                      <Label className="mb-2 block font-medium text-gray-700">
+                        Offered CTC Range (LPA)
+                      </Label>
+                      <div className="grid grid-cols-2 gap-4 max-w-xs">
+                        <Input
+                          id="ctcMin"
+                          type="number"
+                          min={0}
+                          {...register("ctcMin", { valueAsNumber: true })}
+                          placeholder="Min"
+                          className="mt-1"
+                        />
+                        <Input
+                          id="ctcMax"
+                          type="number"
+                          min={0}
+                          {...register("ctcMax", { valueAsNumber: true })}
+                          placeholder="Max"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 max-w-xs">
+                        {errors.ctcMin?.message && (
+                          <p className="text-red-500 text-sm mt-1">{errors.ctcMin.message}</p>
+                        )}
+                        {errors.ctcMax?.message && (
+                          <p className="text-red-500 text-sm mt-1">{errors.ctcMax.message}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <Button type="submit" disabled={isSubmitting} className="btn-hero w-full">
+                    {isSubmitting ? "Sending..." : "Submit your hiring needs"}
                   </Button>
                 </form>
               </div>
             </div>
 
-            {/* Trust Signals & Your AI Recruitment Journey Sections */}
+           {/* Trust Signals & Your AI Recruitment Journey Sections */}
             <div className="animate-slide-in-right flex flex-col w-full max-w-lg space-y-8">
-              {/* Why Choose Careerfit.ai? */}
               <section className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300 w-full">
-                <h3 className="text-xl font-bold text-primary mb-6">
-                  Why Choose Careerfit.ai?
-                </h3>
+                <h3 className="text-xl font-bold text-primary mb-6">Why Choose Careerfit.ai?</h3>
                 <div className="space-y-6">
                   {trustSignals.map((signal) => (
                     <div key={signal.title} className="flex items-start space-x-4">
@@ -237,9 +245,7 @@ const Contact = () => {
                         <signal.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-primary mb-1">
-                          {signal.title}
-                        </h4>
+                        <h4 className="font-semibold text-primary mb-1">{signal.title}</h4>
                         <p className="text-muted-foreground">{signal.description}</p>
                       </div>
                     </div>
@@ -247,7 +253,6 @@ const Contact = () => {
                 </div>
               </section>
 
-              {/* Your AI Recruitment Journey */}
               <section
                 className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 w-full cursor-pointer transform hover:-translate-y-1"
                 role="region"
@@ -263,9 +268,9 @@ const Contact = () => {
               </section>
             </div>
           </div>
-           <ClientLogos />
-           <SuccessStories />
-           <FAQ />
+          <ClientLogos />
+          <SuccessStories />
+          <FAQ />
         </div>
       </main>
 

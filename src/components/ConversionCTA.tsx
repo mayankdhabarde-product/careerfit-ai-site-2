@@ -29,7 +29,7 @@ const ConversionCTA = () => {
           </h2>
           
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join 120+ companies that have revolutionized their recruitment with Careerfit.ai
+            Join 120+ companies that have revolutionized their recruitment with Careerfit
           </p>
 
           {/* Benefits */}

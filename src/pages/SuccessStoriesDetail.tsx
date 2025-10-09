@@ -70,7 +70,7 @@ const SuccessStoriesDetail = () => {
         ]
       },
       testimonial: {
-        quote: "Careerfit.ai transformed our hiring process completely. What usually takes months was completed in just over a week with exceptional quality candidates. Every hire has not only met but exceeded our expectations, and our product launch was a huge success thanks to having the right team in place.",
+        quote: "Careerfit transformed our hiring process completely. What usually takes months was completed in just over a week with exceptional quality candidates. Every hire has not only met but exceeded our expectations, and our product launch was a huge success thanks to having the right team in place.",
         author: "Sarah Chen",
         title: "VP of Engineering",
         company: "TechCorp Solutions"
@@ -229,7 +229,7 @@ const SuccessStoriesDetail = () => {
               Success Stories
             </h1>
             <p className="text-xl text-white/90 animate-slide-up animate-delay-100">
-              Real results from companies that transformed their hiring with Careerfit.ai
+              Real results from companies that transformed their hiring with Careerfit
             </p>
           </div>
         </section>

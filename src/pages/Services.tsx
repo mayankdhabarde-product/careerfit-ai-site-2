@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -37,52 +38,132 @@ import {
   ImageIcon,
 } from "lucide-react";
 
+function IndustryModalPortal({ industry, anchorRef }) {
+  const [modalStyle, setModalStyle] = useState({ top: 0, left: 0, width: 0 });
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (!anchorRef.current) return;
+
+    const updatePosition = () => {
+      const rect = anchorRef.current.getBoundingClientRect();
+      setModalStyle({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    };
+
+    updatePosition();
+
+    window.addEventListener("scroll", updatePosition);
+    window.addEventListener("resize", updatePosition);
+
+    return () => {
+      window.removeEventListener("scroll", updatePosition);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [anchorRef]);
+
+  if (typeof document === "undefined") return null;
+
+  return ReactDOM.createPortal(
+    <div
+      ref={modalRef}
+      style={{
+        position: "absolute",
+        top: modalStyle.top,
+        left: modalStyle.left,
+        width: modalStyle.width,
+        zIndex: 9999,
+        background: "white",
+        borderRadius: 12,
+        padding: 20,
+        boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+        border: "1px solid rgba(59, 130, 246, 0.4)", // Tailwind primary/20 color approx
+      }}
+      onClick={(e) => e.stopPropagation()}
+      id="industry-popup"
+    >
+      <h4 className="text-xs font-semibold text-primary/80 mb-3 uppercase tracking-wide">
+        Positions we have filled:
+      </h4>
+      <ul className="max-h-[400px] overflow-y-auto space-y-2 text-sm text-foreground/80">
+        {industry.roles.map((role, idx) => (
+          <li key={idx} className="flex items-start gap-2 hover:text-primary">
+            <span className="text-secondary">&#8226;</span>
+            <span>{role}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4">
+        <Link to="/contact">
+          <Button className="w-full">Give Your Requirement</Button>
+        </Link>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 const Services = () => {
   const [openIndustryIndex, setOpenIndustryIndex] = useState<number | null>(null);
-  const [modalStyle, setModalStyle] = useState<{ top: number; left: number; width: number } | null>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!event.target) return;
+
       if (openIndustryIndex !== null) {
-        const modalEl = document.getElementById("industry-popup");
-        if (modalEl && !modalEl.contains(event.target as Node)) {
-          setOpenIndustryIndex(null);
-          setModalStyle(null);
-        }
+        const popups = document.querySelectorAll("#industry-popup");
+        let clickedInPopup = false;
+        popups.forEach((popup) => {
+          if (popup.contains(event.target as Node)) clickedInPopup = true;
+        });
+        if (!clickedInPopup) setOpenIndustryIndex(null);
       }
     };
     window.addEventListener("click", handleClickOutside);
     return () => window.removeEventListener("click", handleClickOutside);
   }, [openIndustryIndex]);
 
-  const onOpenModal = (index: number) => {
-    if (openIndustryIndex === index) {
-      setOpenIndustryIndex(null);
-      setModalStyle(null);
-      return;
-    }
-    setOpenIndustryIndex(index);
-    if (cardRefs.current[index]) {
-      const rect = cardRefs.current[index]!.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-      setModalStyle({
-        top: rect.bottom + scrollTop + 8 - window.scrollY,
-        left: rect.left + scrollLeft - window.scrollX,
-        width: rect.width,
-      });
-    }
-  };
-
   const focusAreas = [
-    { icon: Briefcase, title: "Full-time Hiring", description: "Permanent roles across all levels - from entry-level to senior positions", color: "text-primary" },
-    { icon: Users, title: "Internships & Early Talent", description: "Building your future workforce with fresh graduates and interns", color: "text-secondary" },
-    { icon: Target, title: "Executive Search", description: "Leadership and C-suite placements for strategic growth", color: "text-primary" },
-    { icon: Clock, title: "Contract & Temporary Staffing", description: "Flexible workforce solutions for project-based needs", color: "text-secondary" },
-    { icon: TrendingUp, title: "Bulk Hiring", description: "Large-scale recruitment for rapid team expansion", color: "text-primary" },
-    { icon: Building2, title: "Project-Based Recruitment", description: "Dedicated hiring campaigns tailored to your project timeline", color: "text-secondary" },
+    {
+      icon: Briefcase,
+      title: "Full-time Hiring",
+      description:
+        "Permanent roles across all levels - from entry-level to senior positions",
+      color: "text-primary",
+    },
+    {
+      icon: Users,
+      title: "Internships & Early Talent",
+      description: "Building your future workforce with fresh graduates and interns",
+      color: "text-secondary",
+    },
+    {
+      icon: Target,
+      title: "Executive Search",
+      description: "Leadership and C-suite placements for strategic growth",
+      color: "text-primary",
+    },
+    {
+      icon: Clock,
+      title: "Contract & Temporary Staffing",
+      description: "Flexible workforce solutions for project-based needs",
+      color: "text-secondary",
+    },
+    {
+      icon: TrendingUp,
+      title: "Bulk Hiring",
+      description: "Large-scale recruitment for rapid team expansion",
+      color: "text-primary",
+    },
+    {
+      icon: Building2,
+      title: "Project-Based Recruitment",
+      description: "Dedicated hiring campaigns tailored to your project timeline",
+      color: "text-secondary",
+    },
   ];
 
   const industries = [
@@ -257,7 +338,8 @@ const Services = () => {
     {
       icon: Building2,
       title: "SMEs",
-      description: "Scalable recruitment solutions for growing small and medium enterprises",
+      description:
+        "Scalable recruitment solutions for growing small and medium enterprises",
       stats: "51-500 employees",
     },
     {
@@ -283,11 +365,13 @@ const Services = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-2xl md:text-1xl lg:text-3xl font-bold text-primary mb-6 animate-fade-in">
+          <h1 className="text-2xl md:text-1xl lg:text-3xl font-bold text-primary mb-3 animate-fade-in">
             Recruitment Solutions for Every Need
           </h1>
-          <p className="text-sm text-foreground/80 max-w-3xl mx-auto mb-8 animate-fade-in animate-delay-100">
-            From startups to enterprises, from tech to healthcare --- we find the perfect talent for companies of any size, in any industry, faster and smarter with AI-powered recruitment.
+          <p className="text-sm text-foreground/80 max-w-6xl mx-auto mb-8 animate-fade-in animate-delay-100">
+            From startups to enterprises, from tech to healthcare - we find the
+            perfect talent for companies of any size, in any industry, faster and
+            smarter with AI-powered recruitment.
           </p>
           <div className="flex flex-wrap justify-center gap-4 animate-fade-in animate-delay-200">
             <Link to="/contact">
@@ -314,7 +398,9 @@ const Services = () => {
                 className="text-center animate-scale-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-2">{metric.value}</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                  {metric.value}
+                </div>
                 <div className="text-foreground/70 font-medium">{metric.label}</div>
               </div>
             ))}
@@ -326,9 +412,12 @@ const Services = () => {
       <section id="core-services" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Core Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+              Our Core Services
+            </h2>
             <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Comprehensive recruitment solutions tailored to your unique hiring needs
+              Comprehensive recruitment solutions tailored to your unique hiring
+              needs
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -347,7 +436,9 @@ const Services = () => {
                   <CardTitle className="text-xl text-foreground">{area.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-foreground/70">{area.description}</CardDescription>
+                  <CardDescription className="text-foreground/70">
+                    {area.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -356,95 +447,92 @@ const Services = () => {
       </section>
 
       {/* Industries Served Section */}
-      <section id="industries" className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/30 relative">
+      <section
+        id="industries"
+        className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/30 relative"
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-primary">Industries We Cater To</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-primary">
+              We have expertise in all Indusries
+            </h2>
             <p className="text-l text-foreground/70 max-w-10xl mx-auto leading-relaxed">
-              With deep domain expertise across diverse sectors, we deliver specialized talent acquisition solutions tailored to your industry's unique needs.
+              With deep domain expertise across diverse sectors, we deliver
+              specialized talent acquisition solutions tailored to your industry's
+              unique needs.
             </p>
           </div>
 
           {/* Industry Cards Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((industry, index) => (
-              <Card
-                key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
-                className="relative group hover:shadow-strong transition-all duration-300 border-2 border-border hover:border-primary/30 animate-fade-in"
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-secondary/30 transition-all duration-300">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <ImageIcon className="w-16 h-16 text-primary/30" />
+            {industries.map((industry, index) => {
+              const buttonRef = useRef(null);
+              return (
+                <Card
+                  key={index}
+                  className="relative group hover:shadow-strong transition-all duration-300 border-2 border-border hover:border-primary/30 animate-fade-in"
+                  style={{ animationDelay: `${index * 0.08}s` }}
+                >
+                  <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-secondary/30 transition-all duration-300">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <ImageIcon className="w-16 h-16 text-primary/30" />
+                    </div>
+                    <industry.icon className="w-20 h-20 text-primary z-10" />
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary">
+                      {industry.roles.length} Roles
+                    </div>
                   </div>
-                  <industry.icon className="w-20 h-20 text-primary z-10" />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary">
-                    {industry.roles.length} Roles
-                  </div>
-                </div>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-xl text-primary group-hover:text-secondary transition-colors">{industry.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenModal(index);
-                    }}
-                    className="w-full flex items-center justify-between text-sm font-semibold text-secondary hover:text-primary transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      All Jobs
-                      {openIndustryIndex === index ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                    </span>
-                  </button>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-xl text-primary group-hover:text-secondary transition-colors">
+                      {industry.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <button
+                      ref={buttonRef}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenIndustryIndex(
+                          openIndustryIndex === index ? null : index
+                        );
+                      }}
+                      className="w-full flex items-center justify-between text-sm font-semibold text-secondary hover:text-primary transition-colors"
+                    >
+                      <span className="flex items-center gap-2">
+                        All Jobs
+                        {openIndustryIndex === index ? (
+                          <ChevronUp className="w-5 h-5" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5" />
+                        )}
+                      </span>
+                    </button>
+
+                    {/* Modal Portal */}
+                    {openIndustryIndex === index && (
+                      <IndustryModalPortal
+                      industry={industry}
+                      anchorRef={buttonRef}
+                      />
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
-        {/* Modal Popup positioned below clicked card */}
-        {openIndustryIndex !== null && modalStyle && (
-          <div
-            id="industry-popup"
-            style={{
-              position: "fixed",
-              top: modalStyle.top,
-              left: modalStyle.left,
-              width: modalStyle.width,
-              zIndex: 9999,
-              background: "#fff",
-              borderRadius: 12,
-              padding: 20,
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h4 className="text-xs font-semibold text-primary/80 mb-3 uppercase tracking-wide">Positions we filled:</h4>
-            <ul className="max-h-[400px] overflow-y-auto space-y-2 text-sm text-foreground/80">
-              {industries[openIndustryIndex].roles.map((role, idx) => (
-                <li key={idx} className="flex items-start gap-2 hover:text-primary">
-                  <span className="text-secondary">&#8226;</span>
-                  <span>{role}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4">
-              <Link to="/contact">
-                <Button className="w-full">Give Your Requirement</Button>
-              </Link>
-            </div>
-          </div>
-        )}
       </section>
 
       {/* Company Sizes Section */}
       <section id="company-sizes" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">We Work With Companies of All Sizes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+              We Work With Companies of All Sizes
+            </h2>
             <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Whether you're a lean startup or a global enterprise, our recruitment solutions scale with your needs
+              Whether you're a lean startup or a global enterprise, our recruitment
+              solutions scale with your needs
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -459,10 +547,14 @@ const Services = () => {
                     <size.icon className="w-10 h-10 text-white" />
                   </div>
                   <CardTitle className="text-2xl text-primary">{size.title}</CardTitle>
-                  <div className="text-sm text-secondary font-semibold mt-2">{size.stats}</div>
+                  <div className="text-sm text-secondary font-semibold mt-2">
+                    {size.stats}
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-foreground/70">{size.description}</CardDescription>
+                  <CardDescription className="text-foreground/70">
+                    {size.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -475,7 +567,11 @@ const Services = () => {
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Choose Careerfit.AI?</h2>
           <p className="text-xl text-white/90 mb-8 leading-relaxed">
-            We combine cutting-edge AI technology with expert human insight to deliver exceptional recruitment outcomes. Our data-driven approach reduces time-to-hire by 75%, minimizes hiring risks, and ensures you get candidates who are not just qualified---but the perfect cultural and technical fit.
+            We combine cutting-edge AI technology with expert human insight to
+            deliver exceptional recruitment outcomes. Our data-driven approach
+            reduces time-to-hire by 75%, minimizes hiring risks, and ensures you
+            get candidates who are not just qualified---but the perfect cultural and
+            technical fit.
           </p>
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="text-center">
@@ -497,12 +593,18 @@ const Services = () => {
       {/* Meet Our Team Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Meet Our Expert Recruiters</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">
+            Meet Our Expert Recruiters
+          </h2>
           <p className="text-lg text-foreground/70 mb-8">
-            Our team of experienced talent acquisition specialists brings deep industry knowledge and a passion for connecting the right people with the right opportunities.
+            Our team of experienced talent acquisition specialists brings deep
+            industry knowledge and a passion for connecting the right people with
+            the right opportunities.
           </p>
           <Link to="/about#team">
-            <Button size="lg" variant="outline" className="btn-outline-hero">Meet the Team</Button>
+            <Button size="lg" variant="outline" className="btn-outline-hero">
+              Meet the Team
+            </Button>
           </Link>
         </div>
       </section>
@@ -510,19 +612,28 @@ const Services = () => {
       {/* Final CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary/5">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Ready to Build Your Dream Team?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">
+            Ready to Build Your Dream Team?
+          </h2>
           <p className="text-xl text-foreground/70 mb-8">
-            Let's discuss your hiring needs and create a customized recruitment strategy that delivers results in just 10 days.
+            Let's discuss your hiring needs and create a customized recruitment
+            strategy that delivers results in just 10 days.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/contact">
-              <Button size="lg" className="btn-hero">Contact Sales Team</Button>
+              <Button size="lg" className="btn-hero">
+                Contact Sales Team
+              </Button>
             </Link>
             <Link to="/success-stories">
-              <Button size="lg" variant="secondary">View Case Studies</Button>
+              <Button size="lg" variant="secondary">
+                View Case Studies
+              </Button>
             </Link>
           </div>
-          <p className="text-sm text-foreground/60 mt-6">Free consultation • No setup fees • Results guaranteed</p>
+          <p className="text-sm text-foreground/60 mt-6">
+            Free consultation • No setup fees • Results guaranteed
+          </p>
         </div>
       </section>
 

@@ -28,7 +28,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">C</span>
               </div>
-              <span className="text-xl font-bold">Careerfit.ai</span>
+              <span className="text-xl font-bold">Careerfit</span>
             </Link>
             
             <p className="text-white/80 leading-relaxed">
@@ -137,7 +137,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="py-6 border-t border-white/10 text-center">
           <p className="text-white/60">
-            © {new Date().getFullYear()} Careerfit.ai. All rights reserved.
+            © {new Date().getFullYear()} Careerfit. All rights reserved.
           </p>
         </div>
       </div>

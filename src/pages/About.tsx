@@ -119,11 +119,8 @@ const About = () => {
       </h2>
 
       <p className="text-lg text-black leading-relaxed mb-8">
-        Our mission is to fundamentally transform the hiring landscape, making truly exceptional talent readily accessible to every company, regardless of their size, industry, or geographical location. We envision a future where the perfect candidate is never out of reach, and businesses can build the teams they need to innovate and thrive without the historical barriers that have plagued recruitment. We are committed to leveling the playing field, ensuring that both established enterprises and burgeoning startups have equal opportunities to secure the best human capital available.<br />
-        <br />
-        We are dedicated to meticulously dismantling the pervasive inefficiencies, inherent biases, and frustrating experiences that currently define traditional recruitment methods. This includes streamlining outdated processes, leveraging advanced technologies to identify potential without prejudice, and creating a transparent and equitable system for all participants. Our goal is to move beyond the superficial aspects of a resume and delve into the true capabilities and potential of each individual, fostering a meritocratic environment where skills and aptitude are paramount.<br />
-        <br />
-        Ultimately, we strive to foster a more equitable, efficient, and effective talent acquisition ecosystem. By creating a seamless bridge between exceptional talent and deserving opportunities, we empower individuals to reach their full professional potential and enable companies to achieve unprecedented growth and innovation. We believe that by revolutionizing how talent is discovered and integrated, we can contribute to a more prosperous and dynamic global economy for everyone.
+        We’re on a mission to make hiring smarter, faster, and fairer for every business — no matter the size or location.<br />
+        By using AI and data-driven insights, we eliminate inefficiencies and bias from traditional recruitment, connecting companies with the right talent effortlessly.
       </p>
 
       <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
@@ -149,9 +146,8 @@ const About = () => {
       </h2>
 
       <p className="text-lg text-black leading-relaxed mb-8">
-        To revolutionize recruitment by setting the global standard for intelligent matching, ensuring every hire is a perfect fit, every process is transparent, and every outcome surpasses expectations. We are dedicated to creating a world where discovering the right talent is not just seamless, but consistently successful, fostering growth and innovation for businesses and individuals alike.<br />
-        <br />Our advanced platform leverages AI algorithms to analyze vast datasets, identifying candidates with the precise skills, experience, and cultural fit required for each role.
-        Our approach minimizes bias, and significantly accelerates the hiring timeline. We empower organizations to build stronger teams and individuals to achieve their career aspirations.    </p>
+        To redefine recruitment through intelligent matching — where every hire fits perfectly, every process is transparent, and every decision drives growth
+        We envision a world where finding the right talent isn’t a challenge but a seamless experience powered by AI and human insight </p>
       <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
         <p className="text-foreground font-medium">
           "Building the future of work, one perfect hire at a time."
@@ -167,7 +163,7 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 animate-fade-in">
               <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-                Why Choose Careerfit.ai?
+                Why Choose us?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Our unique blend of AI technology and human expertise sets us apart in the recruitment industry
@@ -250,7 +246,7 @@ const About = () => {
                 Meet Our Team
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                The talented professionals behind Careerfit.ai's success
+                The talented professionals behind Careerfit's success
               </p>
             </div>
 
@@ -322,7 +318,7 @@ const About = () => {
                 Ready to Transform Your Hiring?
               </h2>
               <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-                Join the companies who trust Careerfit.ai to build their exceptional teams. 
+                Join the companies who trust Careerfit to build their exceptional teams. 
                 Let's create your success story together.
               </p>
               
